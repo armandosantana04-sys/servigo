@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../widgets/cards/category_card.dart';
 import '../../widgets/cards/service_card.dart';
+import '../../widgets/cards/promo_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,9 +17,7 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(24),
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-
+          child: ListView(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,6 +69,25 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
+              SizedBox(
+                height: 160,
+
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+
+                  children: const [
+                    PromoCard(
+                      title: '20% OFF',
+                      subtitle: 'En servicios de limpieza esta semana',
+                    ),
+
+                    PromoCard(
+                      title: 'Servicio Express',
+                      subtitle: 'Técnicos disponibles 24/7',
+                    ),
+                  ],
+                ),
+              ),
               Text(
                 'Categorías',
 
@@ -124,13 +142,14 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
 
               Expanded(
-                child: ListView(
-                  children: const [
+                child: Column(
+                  children: [
                     ServiceCard(
                       title: 'Martínez Plomería',
                       category: 'Plomería',
                       price: '\$30',
                       rating: 4.8,
+                      imagePath: 'assets/images/plumbing.jpg',
                     ),
 
                     ServiceCard(
@@ -138,6 +157,7 @@ class HomeScreen extends StatelessWidget {
                       category: 'Limpieza',
                       price: '\$45',
                       rating: 4.6,
+                      imagePath: 'assets/images/cleaning.jpg',
                     ),
 
                     ServiceCard(
@@ -145,6 +165,7 @@ class HomeScreen extends StatelessWidget {
                       category: 'Computación',
                       price: '\$50',
                       rating: 4.9,
+                      imagePath: 'assets/images/computer.jpg',
                     ),
                   ],
                 ),

@@ -8,21 +8,24 @@ class ServiceCard extends StatelessWidget {
   final String category;
   final String price;
   final double rating;
+  final String imagePath;
 
-  const ServiceCard({
+  ServiceCard({
     super.key,
     required this.title,
     required this.category,
     required this.price,
     required this.rating,
+    required this.imagePath,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 250),
       margin: const EdgeInsets.only(bottom: 20),
 
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(18),
 
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
@@ -33,6 +36,18 @@ class ServiceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+
+            child: Image.asset(
+              imagePath,
+              height: 180,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
@@ -48,6 +63,7 @@ class ServiceCard extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 14),
 
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -80,6 +96,26 @@ class ServiceCard extends StatelessWidget {
             style: const TextStyle(
               color: AppColors.textSecondary,
               fontSize: 15,
+            ),
+          ),
+          const SizedBox(height: 14),
+
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.08),
+              borderRadius: BorderRadius.circular(20),
+            ),
+
+            child: const Text(
+              'Disponible',
+
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
 
