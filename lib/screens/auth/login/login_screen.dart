@@ -5,7 +5,9 @@ import '../../../widgets/inputs/custom_text_field.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/buttons/social_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../home/home_screen.dart';
+import '../../main_navigation/main_navigation_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -78,7 +80,12 @@ class LoginScreen extends StatelessWidget {
 
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.selectAccountType,
+                          );
+                        },
 
                         child: const Text('Registrarse'),
                       ),
@@ -177,7 +184,7 @@ class LoginScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const HomeScreen(),
+                                builder: (_) => const MainNavigationScreen(),
                               ),
                             );
                           },

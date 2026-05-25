@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
-import 'screens/auth/login/login_screen.dart';
 
 void main() {
   runApp(const ServiGoApp());
@@ -19,7 +19,9 @@ class ServiGoApp extends StatelessWidget {
 
       theme: AppTheme.darkTheme,
 
-      home: const LoginScreen(),
+      initialRoute: AppRoutes.login,
+
+      routes: AppRoutes.routes,
     );
   }
 }

@@ -140,62 +140,9 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
-
-              Expanded(
-                child: Column(
-                  children: [
-                    ServiceCard(
-                      title: 'Martínez Plomería',
-                      category: 'Plomería',
-                      price: '\$30',
-                      rating: 4.8,
-                      imagePath: 'assets/images/plumbing.jpg',
-                    ),
-
-                    ServiceCard(
-                      title: 'CleanPro Servicios',
-                      category: 'Limpieza',
-                      price: '\$45',
-                      rating: 4.6,
-                      imagePath: 'assets/images/cleaning.jpg',
-                    ),
-
-                    ServiceCard(
-                      title: 'TechFix Reparaciones',
-                      category: 'Computación',
-                      price: '\$50',
-                      rating: 4.9,
-                      imagePath: 'assets/images/computer.jpg',
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.cardBackground,
-
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: Colors.grey,
-
-        type: BottomNavigationBarType.fixed,
-
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Buscar'),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favoritos',
-          ),
-
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Mensajes'),
-
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
-        ],
       ),
     );
   }
