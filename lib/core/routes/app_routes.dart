@@ -4,7 +4,7 @@ import '../../screens/auth/login/login_screen.dart';
 import '../../screens/auth/register/select_account_type_screen.dart';
 import '../../screens/auth/register/register_user_screen.dart';
 import '../../screens/auth/register/register_business_screen.dart';
-import '../../screens/home/home_screen.dart';
+import '../../screens/user/home/home_screen.dart';
 
 class AppRoutes {
   static const String login = '/login';

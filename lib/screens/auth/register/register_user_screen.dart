@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servigo/screens/user/navigation/user_navigation_screen.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../widgets/inputs/custom_text_field.dart';
@@ -86,7 +87,21 @@ class RegisterUserScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            PrimaryButton(text: 'Crear cuenta', onPressed: () {}),
+            PrimaryButton(
+              text: 'Registrarse',
+
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+
+                  MaterialPageRoute(
+                    builder: (_) => const UserNavigationScreen(),
+                  ),
+
+                  (route) => false,
+                );
+              },
+            ),
           ],
         ),
       ),

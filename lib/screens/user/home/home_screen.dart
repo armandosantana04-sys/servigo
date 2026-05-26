@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../core/constants/app_colors.dart';
-import '../../widgets/cards/category_card.dart';
-import '../../widgets/cards/service_card.dart';
-import '../../widgets/cards/promo_card.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../widgets/cards/category_card.dart';
+import '../../../widgets/cards/service_card.dart';
+import '../../../widgets/cards/promo_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

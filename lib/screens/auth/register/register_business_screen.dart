@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servigo/screens/business/navigation/business_navigation_screen.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../widgets/buttons/primary_button.dart';
@@ -107,7 +108,21 @@ class RegisterBusinessScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            PrimaryButton(text: 'Registrar negocio', onPressed: () {}),
+            PrimaryButton(
+              text: 'Registrar empresa',
+
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+
+                  MaterialPageRoute(
+                    builder: (_) => const BusinessNavigationScreen(),
+                  ),
+
+                  (route) => false,
+                );
+              },
+            ),
           ],
         ),
       ),
