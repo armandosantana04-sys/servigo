@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../../../widgets/cards/service_card.dart';
-import '../../services/service_detail_screen.dart';
+import '../../core/constants/app_colors.dart';
+import '../../widgets/cards/service_card.dart';
+import 'service_detail_screen.dart';
 
-class ServicesScreen extends StatelessWidget {
-  const ServicesScreen({super.key});
+class ServicesCatalogScreen extends StatelessWidget {
+  const ServicesCatalogScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,16 @@ class ServicesScreen extends StatelessWidget {
         'image': 'assets/images/plumbing.jpg',
       },
       {
-        'title': 'CleanPro',
+        'title': 'CleanPro Servicios',
         'category': 'Limpieza',
         'price': '\$45',
-        'rating': 4.7,
+        'rating': 4.6,
         'image': 'assets/images/cleaning.jpg',
       },
       {
-        'title': 'TechFix',
+        'title': 'TechFix Reparaciones',
         'category': 'Computación',
-        'price': '\$60',
+        'price': '\$50',
         'rating': 4.9,
         'image': 'assets/images/computer.jpg',
       },
@@ -57,16 +57,16 @@ class ServicesScreen extends StatelessWidget {
 
               child: Row(
                 children: [
-                  _buildCategory('Todos'),
-                  _buildCategory('Plomería'),
-                  _buildCategory('Limpieza'),
-                  _buildCategory('Electricidad'),
-                  _buildCategory('Computación'),
+                  _categoryChip('Todos'),
+                  _categoryChip('Plomería'),
+                  _categoryChip('Electricidad'),
+                  _categoryChip('Limpieza'),
+                  _categoryChip('Computación'),
                 ],
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
             Expanded(
               child: ListView.builder(
@@ -106,11 +106,11 @@ class ServicesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategory(String text) {
+  Widget _categoryChip(String title) {
     return Container(
       margin: const EdgeInsets.only(right: 12),
 
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
 
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
@@ -118,7 +118,7 @@ class ServicesScreen extends StatelessWidget {
       ),
 
       child: Text(
-        text,
+        title,
 
         style: const TextStyle(
           color: Colors.white,

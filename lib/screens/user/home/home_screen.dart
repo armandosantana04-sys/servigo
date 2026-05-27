@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
+
+import '../../../widgets/home/home_header.dart';
+import '../../../widgets/home/search_bar_widget.dart';
+import '../../../widgets/home/section_title.dart';
+import '../../../widgets/home/popular_business_card.dart';
+import '../../../widgets/home/nearby_service_card.dart';
+
 import '../../../widgets/cards/category_card.dart';
-import '../../../widgets/cards/service_card.dart';
-import '../../../widgets/cards/promo_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,134 +19,112 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
 
       body: SafeArea(
-        child: Padding(
+        child: ListView(
           padding: const EdgeInsets.all(24),
 
-          child: ListView(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const HomeHeader(),
 
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            const SizedBox(height: 30),
 
-                    children: [
-                      Text(
-                        'Hola, Armando 👋',
+            const SearchBarWidget(),
 
-                        style: TextStyle(
-                          color: AppColors.textPrimary,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+            const SizedBox(height: 35),
 
-                      const SizedBox(height: 6),
+            const SectionTitle(title: 'Categorías'),
 
-                      Text(
-                        'Encuentra el servicio ideal',
+            const SizedBox(height: 20),
 
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+
+              child: Row(
+                children: const [
+                  CategoryCard(
+                    icon: Icons.plumbing,
+                    title: 'Plomería',
                   ),
 
-                  CircleAvatar(
-                    radius: 26,
-                    backgroundColor: AppColors.primary,
+                  SizedBox(width: 16),
 
-                    child: Icon(Icons.person, color: Colors.white),
+                  CategoryCard(
+                    icon: Icons.electrical_services,
+                    title: 'Electricista',
+                  ),
+
+                  SizedBox(width: 16),
+
+                  CategoryCard(
+                    icon: Icons.cleaning_services,
+                    title: 'Limpieza',
+                  ),
+
+                  SizedBox(width: 16),
+
+                  CategoryCard(
+                    icon: Icons.computer,
+                    title: 'Computación',
                   ),
                 ],
               ),
+            ),
 
-              const SizedBox(height: 30),
+            const SizedBox(height: 40),
 
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Buscar servicios...',
-                  prefixIcon: Icon(Icons.search),
-                ),
-              ),
-              const SizedBox(height: 30),
+            const SectionTitle(
+              title: 'Empresas populares',
+            ),
 
-              SizedBox(
-                height: 160,
+            const SizedBox(height: 20),
 
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
+            SizedBox(
+              height: 280,
 
-                  children: const [
-                    PromoCard(
-                      title: '20% OFF',
-                      subtitle: 'En servicios de limpieza esta semana',
-                    ),
-
-                    PromoCard(
-                      title: 'Servicio Express',
-                      subtitle: 'Técnicos disponibles 24/7',
-                    ),
-                  ],
-                ),
-              ),
-              Text(
-                'Categorías',
-
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              SingleChildScrollView(
+              child: ListView(
                 scrollDirection: Axis.horizontal,
 
-                child: Row(
-                  children: [
-                    CategoryCard(icon: Icons.plumbing, title: 'Plomería'),
+                children: const [
+                  PopularBusinessCard(
+                    name: 'Martínez Plomería',
+                    category: 'Plomería',
+                    rating: 4.8,
+                  ),
 
-                    SizedBox(width: 16),
-
-                    CategoryCard(
-                      icon: Icons.electrical_services,
-                      title: 'Electricista',
-                    ),
-
-                    SizedBox(width: 16),
-
-                    CategoryCard(
-                      icon: Icons.cleaning_services,
-                      title: 'Limpieza',
-                    ),
-
-                    SizedBox(width: 16),
-
-                    CategoryCard(icon: Icons.computer, title: 'Computación'),
-                  ],
-                ),
+                  PopularBusinessCard(
+                    name: 'TechFix',
+                    category: 'Computación',
+                    rating: 4.9,
+                  ),
+                ],
               ),
-              const SizedBox(height: 30),
+            ),
 
-              Text(
-                'Servicios populares',
+            const SizedBox(height: 40),
 
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            const SectionTitle(
+              title: 'Servicios cercanos',
+            ),
 
-              const SizedBox(height: 20),
-            ],
-          ),
+            const SizedBox(height: 20),
+
+            const NearbyServiceCard(
+              title: 'Plomero disponible',
+              distance: '1.2 km',
+              available: true,
+            ),
+
+            const NearbyServiceCard(
+              title: 'Electricista profesional',
+              distance: '2.8 km',
+              available: false,
+            ),
+
+            const NearbyServiceCard(
+              title: 'Servicio de limpieza',
+              distance: '900 m',
+              available: true,
+            ),
+          ],
         ),
       ),
     );

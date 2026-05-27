@@ -9,6 +9,7 @@ class ServiceCard extends StatelessWidget {
   final String price;
   final double rating;
   final String imagePath;
+  final VoidCallback onTap;
 
   ServiceCard({
     super.key,
@@ -17,137 +18,151 @@ class ServiceCard extends StatelessWidget {
     required this.price,
     required this.rating,
     required this.imagePath,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      margin: const EdgeInsets.only(bottom: 20),
+    return GestureDetector(
+      onTap: onTap,
 
-      padding: const EdgeInsets.all(18),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
 
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(24),
-      ),
+        margin: const EdgeInsets.only(bottom: 20),
 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(18),
 
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground,
+          borderRadius: BorderRadius.circular(24),
 
-            child: Image.asset(
-              imagePath,
-              height: 180,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
             ),
-          ),
+          ],
+        ),
 
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-            children: [
-              Expanded(
-                child: Text(
-                  title,
-
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-
-                child: Text(
-                  price,
-
-                  style: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 10),
-
-          Text(
-            category,
-
-            style: const TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 15,
-            ),
-          ),
-          const SizedBox(height: 14),
-
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.08),
+          children: [
+            ClipRRect(
               borderRadius: BorderRadius.circular(20),
-            ),
 
-            child: const Text(
-              'Disponible',
-
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+              child: Image.asset(
+                imagePath,
+                height: 180,
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
 
-          const SizedBox(height: 16),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-          Row(
-            children: [
-              const Icon(Icons.star, color: Colors.amber, size: 20),
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
 
-              const SizedBox(width: 6),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
 
-              Text(
-                rating.toString(),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
 
-                style: const TextStyle(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+
+                  child: Text(
+                    price,
+
+                    style: const TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              category,
+
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 15,
+              ),
+            ),
+            const SizedBox(height: 14),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(20),
+              ),
+
+              child: const Text(
+                'Disponible',
+
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            ],
-          ),
+            ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
-          Row(
-            children: [
-              Expanded(
-                child: PrimaryButton(text: 'Reservar', onPressed: () {}),
-              ),
-            ],
-          ),
-        ],
+            Row(
+              children: [
+                const Icon(Icons.star, color: Colors.amber, size: 20),
+
+                const SizedBox(width: 6),
+
+                Text(
+                  rating.toString(),
+
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            Row(
+              children: [
+                Expanded(
+                  child: PrimaryButton(text: 'Ver detalles', onPressed: onTap),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

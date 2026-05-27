@@ -21,7 +21,7 @@ class _UserNavigationScreenState extends State<UserNavigationScreen> {
     const ServicesScreen(),
     const FavoritesScreen(),
     const ChatScreen(),
-    const ProfileScreen(),
+    const UserProfileScreen(),
   ];
 
   @override

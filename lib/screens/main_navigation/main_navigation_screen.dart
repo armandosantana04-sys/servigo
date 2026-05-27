@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../user/home/home_screen.dart';
-import '../explore/explore_screen.dart';
-import '../activity/activity_screen.dart';
-import '../chat/chat_screen.dart';
-import '../profile/profile_screen.dart';
-
 import '../../core/constants/app_colors.dart';
+
+import '../user/home/home_screen.dart';
+import '../services/services_catalog_screen.dart';
+import '../messages/messages_screen.dart';
+import '../profile/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -20,10 +19,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   final List<Widget> screens = [
     const HomeScreen(),
-    const ExploreScreen(),
-    const ActivityScreen(),
-    const ChatScreen(),
-    const ProfileScreen(),
+    const ServicesCatalogScreen(),
+    const MessagesScreen(),
+    const UserProfileScreen(),
   ];
 
   @override
@@ -52,23 +50,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_rounded),
-            label: 'Explorar',
+            label: 'Servicios',
           ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long),
-            label: 'Actividad',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Mensajes'),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble_outline),
-            label: 'Mensajes',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Perfil',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
         ],
       ),
     );
