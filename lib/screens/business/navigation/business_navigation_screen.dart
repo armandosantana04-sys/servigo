@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_colors.dart';
+
+import '../dashboard/business_dashboard_screen.dart';
+import '../services/business_services_screen.dart';
+import '../messages/business_messages_screen.dart';
+import '../profile/business_profile_screen.dart';
+
 class BusinessNavigationScreen extends StatefulWidget {
   const BusinessNavigationScreen({super.key});
 
@@ -12,11 +19,10 @@ class _BusinessNavigationScreenState extends State<BusinessNavigationScreen> {
   int currentIndex = 0;
 
   final List<Widget> screens = [
-    const Center(child: Text('Dashboard')),
-    const Center(child: Text('Servicios')),
-    const Center(child: Text('Solicitudes')),
-    const Center(child: Text('Mensajes')),
-    const Center(child: Text('Perfil empresa')),
+    const BusinessDashboardScreen(),
+    const BusinessServicesScreen(),
+    const BusinessMessagesScreen(),
+    const BusinessProfileScreen(),
   ];
 
   @override
@@ -33,6 +39,11 @@ class _BusinessNavigationScreenState extends State<BusinessNavigationScreen> {
           });
         },
 
+        backgroundColor: AppColors.cardBackground,
+
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey,
+
         type: BottomNavigationBarType.fixed,
 
         items: const [
@@ -44,11 +55,6 @@ class _BusinessNavigationScreenState extends State<BusinessNavigationScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home_repair_service),
             label: 'Servicios',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Solicitudes',
           ),
 
           BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Mensajes'),
