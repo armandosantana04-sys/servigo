@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:servigo/screens/user/favorites/favorites_screen.dart';
+import 'package:servigo/screens/user/history/history_screen.dart';
+import 'package:servigo/screens/user/settings/settings_screen.dart';
 import '../../auth/login/login_screen.dart';
 import '../../../core/constants/app_colors.dart';
 
@@ -49,18 +52,21 @@ class UserProfileScreen extends StatelessWidget {
             const SizedBox(height: 40),
 
             _option(context, Icons.history, 'Historial', () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Historial próximamente')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const HistoryScreen()),
               );
             }),
             _option(context, Icons.favorite, 'Favoritos', () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Favoritos próximamente')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FavoritesScreen()),
               );
             }),
             _option(context, Icons.settings, 'Configuración', () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Configuración próximamente')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SettingsScreen()),
               );
             }),
             _option(context, Icons.logout, 'Cerrar sesión', () {
