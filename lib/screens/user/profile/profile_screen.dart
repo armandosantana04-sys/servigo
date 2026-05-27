@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../auth/login/login_screen.dart';
 import '../../../core/constants/app_colors.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -10,7 +10,11 @@ class UserProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      appBar: AppBar(title: const Text('Mi Perfil')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+
+        title: const Text('Mi Perfil'),
+      ),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -44,17 +48,42 @@ class UserProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            _option(Icons.history, 'Historial'),
-            _option(Icons.favorite, 'Favoritos'),
-            _option(Icons.settings, 'Configuración'),
-            _option(Icons.logout, 'Cerrar sesión'),
+            _option(context, Icons.history, 'Historial', () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Historial próximamente')),
+              );
+            }),
+            _option(context, Icons.favorite, 'Favoritos', () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Favoritos próximamente')),
+              );
+            }),
+            _option(context, Icons.settings, 'Configuración', () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Configuración próximamente')),
+              );
+            }),
+            _option(context, Icons.logout, 'Cerrar sesión', () {
+              Navigator.pushAndRemoveUntil(
+                context,
+
+                MaterialPageRoute(builder: (_) => const LoginScreen()),
+
+                (route) => false,
+              );
+            }),
           ],
         ),
       ),
     );
   }
 
-  Widget _option(IconData icon, String title) {
+  Widget _option(
+    BuildContext context,
+    IconData icon,
+    String title,
+    VoidCallback onTap,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
 
@@ -64,6 +93,7 @@ class UserProfileScreen extends StatelessWidget {
       ),
 
       child: ListTile(
+        onTap: onTap,
         leading: Icon(icon, color: AppColors.primary),
 
         title: Text(title, style: const TextStyle(color: Colors.white)),

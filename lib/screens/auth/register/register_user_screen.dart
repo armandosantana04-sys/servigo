@@ -5,8 +5,29 @@ import '../../../core/constants/app_colors.dart';
 import '../../../widgets/inputs/custom_text_field.dart';
 import '../../../widgets/buttons/primary_button.dart';
 
-class RegisterUserScreen extends StatelessWidget {
+class RegisterUserScreen extends StatefulWidget {
   const RegisterUserScreen({super.key});
+
+  @override
+  State<RegisterUserScreen> createState() => _RegisterUserScreenState();
+}
+
+class _RegisterUserScreenState extends State<RegisterUserScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
+
+  final emailController = TextEditingController();
+  final confirmEmailController = TextEditingController();
+
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  final phoneController = TextEditingController();
+
+  final addressController = TextEditingController();
+  final colonyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,92 +38,196 @@ class RegisterUserScreen extends StatelessWidget {
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
 
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
+              CustomTextField(
+                hintText: 'Nombre',
+                icon: Icons.person_outline,
+                controller: nameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingresa tu nombre';
+                  }
 
-            const CustomTextField(
-              hintText: 'Nombre',
-              icon: Icons.person_outline,
-            ),
+                  if (value.length < 3) {
+                    return 'Mínimo 3 caracteres';
+                  }
 
-            const SizedBox(height: 20),
+                  return null;
+                },
+              ),
 
-            const CustomTextField(
-              hintText: 'Apellido',
-              icon: Icons.person_outline,
-            ),
+              const SizedBox(height: 20),
 
-            const SizedBox(height: 20),
+              CustomTextField(
+                hintText: 'Apellido',
+                icon: Icons.person_outline,
+                controller: lastNameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingresa tu apellido';
+                  }
 
-            const CustomTextField(
-              hintText: 'Correo',
-              icon: Icons.email_outlined,
-            ),
+                  if (value.length < 3) {
+                    return 'Mínimo 3 caracteres';
+                  }
 
-            const SizedBox(height: 20),
+                  return null;
+                },
+              ),
 
-            const CustomTextField(
-              hintText: 'Confirmar correo',
-              icon: Icons.email_outlined,
-            ),
+              const SizedBox(height: 20),
 
-            const SizedBox(height: 20),
+              CustomTextField(
+                hintText: 'Correo',
+                icon: Icons.email_outlined,
+                controller: emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingresa tu correo';
+                  }
 
-            const CustomTextField(
-              hintText: 'Contraseña',
-              icon: Icons.lock_outline,
-              obscureText: true,
-            ),
+                  if (!value.contains('@')) {
+                    return 'Correo inválido';
+                  }
 
-            const SizedBox(height: 20),
+                  return null;
+                },
+              ),
 
-            const CustomTextField(
-              hintText: 'Confirmar contraseña',
-              icon: Icons.lock_outline,
-              obscureText: true,
-            ),
+              const SizedBox(height: 20),
 
-            const SizedBox(height: 20),
+              CustomTextField(
+                hintText: 'Confirmar correo',
+                icon: Icons.email_outlined,
+                controller: confirmEmailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Confirma tu correo';
+                  }
 
-            const CustomTextField(
-              hintText: 'Número de teléfono',
-              icon: Icons.phone_outlined,
-            ),
+                  if (value != emailController.text) {
+                    return 'Los correos no coinciden';
+                  }
 
-            const SizedBox(height: 20),
+                  return null;
+                },
+              ),
 
-            const CustomTextField(
-              hintText: 'Dirección',
-              icon: Icons.location_on_outlined,
-            ),
+              const SizedBox(height: 20),
 
-            const SizedBox(height: 20),
+              CustomTextField(
+                hintText: 'Contraseña',
+                icon: Icons.lock_outline,
+                obscureText: true,
+                controller: passwordController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingresa tu contraseña';
+                  }
 
-            const CustomTextField(
-              hintText: 'Colonia',
-              icon: Icons.map_outlined,
-            ),
+                  if (value.length < 8) {
+                    return 'Mínimo 8 caracteres';
+                  }
 
-            const SizedBox(height: 40),
+                  return null;
+                },
+              ),
 
-            PrimaryButton(
-              text: 'Registrarse',
+              const SizedBox(height: 20),
 
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
+              CustomTextField(
+                hintText: 'Confirmar contraseña',
+                icon: Icons.lock_outline,
+                obscureText: true,
+                controller: confirmPasswordController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Confirma tu contraseña';
+                  }
 
-                  MaterialPageRoute(
-                    builder: (_) => const UserNavigationScreen(),
-                  ),
+                  if (value != passwordController.text) {
+                    return 'Las contraseñas no coinciden';
+                  }
 
-                  (route) => false,
-                );
-              },
-            ),
-          ],
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              CustomTextField(
+                hintText: 'Número de teléfono',
+                icon: Icons.phone_outlined,
+                controller: phoneController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingresa tu número de teléfono';
+                  }
+
+                  if (value.length < 10) {
+                    return 'Número inválido';
+                  }
+
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              CustomTextField(
+                hintText: 'Dirección',
+                icon: Icons.location_on_outlined,
+                controller: addressController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingresa tu dirección';
+                  }
+
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              CustomTextField(
+                hintText: 'Colonia',
+                icon: Icons.map_outlined,
+                controller: colonyController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingresa tu colonia';
+                  }
+
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 40),
+
+              PrimaryButton(
+                text: 'Registrarse',
+
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+
+                      MaterialPageRoute(
+                        builder: (_) => const UserNavigationScreen(),
+                      ),
+
+                      (route) => false,
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

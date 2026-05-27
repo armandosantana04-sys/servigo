@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
+import '../../data/favorites_data.dart';
 import '../../core/constants/app_colors.dart';
 import '../buttons/primary_button.dart';
 
-class ServiceCard extends StatelessWidget {
+class ServiceCard extends StatefulWidget {
   final String title;
   final String category;
   final String price;
@@ -20,11 +20,16 @@ class ServiceCard extends StatelessWidget {
     required this.imagePath,
     required this.onTap,
   });
+  @override
+  State<ServiceCard> createState() => _ServiceCardState();
+}
 
+class _ServiceCardState extends State<ServiceCard> {
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
 
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
@@ -50,11 +55,52 @@ class ServiceCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
+            Align(
+              alignment: Alignment.topRight,
+
+              child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isFavorite = !isFavorite;
+
+                    if (isFavorite) {
+                      FavoritesData.favorites.add({
+                        'title': widget.title,
+                        'category': widget.category,
+                        'price': widget.price,
+                        'image': widget.imagePath,
+                        'rating': widget.rating,
+                      });
+                    } else {
+                      FavoritesData.favorites.removeWhere(
+                        (item) => item['title'] == widget.title,
+                      );
+                    }
+                  });
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        isFavorite
+                            ? 'Agregado a favoritos'
+                            : 'Eliminado de favoritos',
+                      ),
+                    ),
+                  );
+                },
+
+                icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
+
+                  color: isFavorite ? Colors.red : Colors.white,
+                ),
+              ),
+            ),
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
 
               child: Image.asset(
-                imagePath,
+                widget.imagePath,
                 height: 180,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -68,7 +114,7 @@ class ServiceCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    title,
+                    widget.title,
 
                     style: const TextStyle(
                       color: Colors.white,
@@ -91,7 +137,7 @@ class ServiceCard extends StatelessWidget {
                   ),
 
                   child: Text(
-                    price,
+                    widget.price,
 
                     style: const TextStyle(
                       color: AppColors.primary,
@@ -105,7 +151,7 @@ class ServiceCard extends StatelessWidget {
             const SizedBox(height: 10),
 
             Text(
-              category,
+              widget.category,
 
               style: const TextStyle(
                 color: AppColors.textSecondary,
@@ -142,7 +188,7 @@ class ServiceCard extends StatelessWidget {
                 const SizedBox(width: 6),
 
                 Text(
-                  rating.toString(),
+                  widget.rating.toString(),
 
                   style: const TextStyle(
                     color: Colors.white,
@@ -157,7 +203,10 @@ class ServiceCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: PrimaryButton(text: 'Ver detalles', onPressed: onTap),
+                  child: PrimaryButton(
+                    text: 'Ver detalles',
+                    onPressed: widget.onTap,
+                  ),
                 ),
               ],
             ),

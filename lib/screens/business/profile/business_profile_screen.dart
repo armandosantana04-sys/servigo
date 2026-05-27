@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../auth/login/login_screen.dart';
 import '../../../core/constants/app_colors.dart';
 
 class BusinessProfileScreen extends StatelessWidget {
@@ -65,13 +65,41 @@ class BusinessProfileScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                ),
+
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+
+                    MaterialPageRoute(builder: (_) => const LoginScreen()),
+
+                    (route) => false,
+                  );
+                },
+
+                child: const Text('Cerrar sesión'),
+              ),
+            ),
+
+            const SizedBox(height: 16),
 
             SizedBox(
               width: double.infinity,
               height: 55,
 
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Editar perfil próximamente')),
+                  );
+                },
 
                 child: const Text('Editar perfil'),
               ),

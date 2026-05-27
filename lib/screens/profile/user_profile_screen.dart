@@ -45,37 +45,46 @@ class UserProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            _buildOption(Icons.history, 'Historial'),
-            _buildOption(Icons.favorite, 'Favoritos'),
-            _buildOption(Icons.settings, 'Configuración'),
-            _buildOption(Icons.logout, 'Cerrar sesión'),
+            _buildOption(context, Icons.history, 'Historial', () {}),
+            _buildOption(context, Icons.favorite, 'Favoritos', () {}),
+            _buildOption(context, Icons.settings, 'Configuración', () {}),
+            _buildOption(context, Icons.logout, 'Cerrar sesión', () {}),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOption(IconData icon, String title) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(18),
+  Widget _buildOption(
+    BuildContext context,
+    IconData icon,
+    String title,
+    VoidCallback onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
 
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(18),
-      ),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(18),
 
-      child: Row(
-        children: [
-          Icon(icon, color: AppColors.primary),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground,
+          borderRadius: BorderRadius.circular(18),
+        ),
 
-          const SizedBox(width: 16),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.primary),
 
-          Text(
-            title,
-            style: const TextStyle(color: Colors.white, fontSize: 17),
-          ),
-        ],
+            const SizedBox(width: 16),
+
+            Text(
+              title,
+              style: const TextStyle(color: Colors.white, fontSize: 17),
+            ),
+          ],
+        ),
       ),
     );
   }
