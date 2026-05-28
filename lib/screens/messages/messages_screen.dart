@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/app_colors.dart';
+import '../shared/chat/chat_screen.dart';
+import '../../../core/constants/app_colors.dart';
 
 class MessagesScreen extends StatelessWidget {
   const MessagesScreen({super.key});
@@ -16,59 +17,86 @@ class MessagesScreen extends StatelessWidget {
 
         children: [
           _buildChatTile(
-            name: 'Martínez Plomería',
-            message: 'Claro, puedo ir hoy mismo.',
+            context: context,
+            name: 'Juan Pérez',
+            message: '¿Tiene disponibilidad hoy?',
           ),
 
           _buildChatTile(
-            name: 'CleanPro',
-            message: 'Gracias por contratar nuestro servicio.',
+            context: context,
+            name: 'Andrea López',
+            message: 'Necesito información.',
           ),
         ],
       ),
     );
   }
 
-  Widget _buildChatTile({required String name, required String message}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
+  Widget _buildChatTile({
+    required BuildContext context,
+    required String name,
+    required String message,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
 
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(20),
-      ),
-
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: AppColors.primary,
-            child: const Icon(Icons.business, color: Colors.white),
+          MaterialPageRoute(
+            builder: (_) => ChatScreen(chatName: name, isBusiness: false),
           ),
+        );
+      },
 
-          const SizedBox(width: 16),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(16),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground,
+          borderRadius: BorderRadius.circular(20),
+        ),
 
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                  ),
-                ),
-
-                const SizedBox(height: 4),
-
-                Text(message, style: const TextStyle(color: Colors.white70)),
-              ],
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: AppColors.primary,
+              child: const Icon(Icons.person, color: Colors.white),
             ),
-          ),
-        ],
+
+            const SizedBox(width: 16),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  Text(
+                    message,
+                    style: TextStyle(color: AppColors.textSecondary),
+                  ),
+                ],
+              ),
+            ),
+
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.white54,
+              size: 18,
+            ),
+          ],
+        ),
       ),
     );
   }

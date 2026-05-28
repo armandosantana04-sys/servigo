@@ -20,7 +20,7 @@ class _UserNavigationScreenState extends State<UserNavigationScreen> {
     const HomeScreen(),
     const ServicesScreen(),
     const FavoritesScreen(),
-    const ChatScreen(),
+    ChatScreen(chatName: 'TechFix', isBusiness: false),
     const UserProfileScreen(),
   ];
 

@@ -2,64 +2,142 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class ChatScreen extends StatefulWidget {
+  final String userName;
+
+  const ChatScreen({super.key, required this.userName});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController messageController = TextEditingController();
+
+  final List<Map<String, dynamic>> messages = [
+    {'text': 'Hola 👋', 'isMe': false},
+
+    {'text': '¿En qué puedo ayudarte?', 'isMe': false},
+  ];
+
+  void sendMessage() {
+    if (messageController.text.trim().isEmpty) return;
+
+    setState(() {
+      messages.add({'text': messageController.text, 'isMe': true});
+    });
+
+    final userMessage = messageController.text;
+
+    messageController.clear();
+
+    Future.delayed(const Duration(milliseconds: 900), () {
+      setState(() {
+        messages.add({'text': _autoReply(userMessage), 'isMe': false});
+      });
+    });
+  }
+
+  String _autoReply(String message) {
+    final text = message.toLowerCase();
+
+    if (text.contains('precio')) {
+      return 'Claro, podemos darte información de precios.';
+    }
+
+    if (text.contains('disponible')) {
+      return 'Sí, tenemos disponibilidad hoy.';
+    }
+
+    if (text.contains('hola')) {
+      return '¡Hola! Bienvenido a ServiGo 👋';
+    }
+
+    return 'Gracias por comunicarte con nosotros.';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      appBar: AppBar(title: const Text('Mensajes')),
+      appBar: AppBar(title: Text(widget.userName)),
 
-      body: ListView(
-        padding: const EdgeInsets.all(24),
-
+      body: Column(
         children: [
-          _chatTile('Martínez Plomería', 'Hola, puedo ayudarte.'),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(20),
 
-          _chatTile('TechFix', 'Tu servicio ya está listo.'),
-        ],
-      ),
-    );
-  }
+              itemCount: messages.length,
 
-  Widget _chatTile(String name, String message) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 18),
-      padding: const EdgeInsets.all(18),
+              itemBuilder: (context, index) {
+                final message = messages[index];
 
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(20),
-      ),
+                final isMe = message['isMe'];
 
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: AppColors.primary,
-            child: const Icon(Icons.person),
+                return Align(
+                  alignment: isMe
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 14),
+
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+
+                    decoration: BoxDecoration(
+                      color: isMe
+                          ? AppColors.primary
+                          : AppColors.cardBackground,
+
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+
+                    child: Text(
+                      message['text'],
+
+                      style: const TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
 
-          const SizedBox(width: 16),
+          Container(
+            padding: const EdgeInsets.all(16),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            decoration: BoxDecoration(color: AppColors.cardBackground),
 
+            child: Row(
               children: [
-                Text(
-                  name,
+                Expanded(
+                  child: TextField(
+                    controller: messageController,
 
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                    style: const TextStyle(color: Colors.white),
+
+                    decoration: const InputDecoration(
+                      hintText: 'Escribe un mensaje...',
+                    ),
                   ),
                 ),
 
-                const SizedBox(height: 4),
+                const SizedBox(width: 12),
 
-                Text(message, style: const TextStyle(color: Colors.grey)),
+                CircleAvatar(
+                  backgroundColor: AppColors.primary,
+
+                  child: IconButton(
+                    onPressed: sendMessage,
+
+                    icon: const Icon(Icons.send, color: Colors.white),
+                  ),
+                ),
               ],
             ),
           ),

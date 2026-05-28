@@ -10,7 +10,10 @@ class FavoritesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      appBar: AppBar(title: const Text('Favoritos')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Favoritos'),
+      ),
 
       body: FavoritesData.favorites.isEmpty
           ? Center(

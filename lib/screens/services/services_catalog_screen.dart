@@ -36,7 +36,10 @@ class ServicesCatalogScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      appBar: AppBar(title: const Text('Servicios')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Servicios'),
+      ),
 
       body: Padding(
         padding: const EdgeInsets.all(20),
