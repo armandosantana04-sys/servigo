@@ -2,15 +2,32 @@ import 'package:flutter/material.dart';
 import '../../auth/login/login_screen.dart';
 import '../../../core/constants/app_colors.dart';
 
-class BusinessProfileScreen extends StatelessWidget {
+class BusinessProfileScreen extends StatefulWidget {
   const BusinessProfileScreen({super.key});
+  @override
+  State<BusinessProfileScreen> createState() => _BusinessProfileScreenState();
+}
+
+class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
+  String businessName = 'TechFix Reparaciones';
+
+  String description = 'Especialistas en reparación de computadoras y laptops.';
+
+  String phone = '+52 786 123 4567';
+
+  String address = 'Ciudad Hidalgo, Michoacán';
+
+  String schedule = '8:00 AM - 8:00 PM';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      appBar: AppBar(title: const Text('Perfil del negocio')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Perfil del negocio'),
+      ),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -27,7 +44,7 @@ class BusinessProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             Text(
-              'TechFix Reparaciones',
+              businessName,
               style: TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 28,
@@ -38,7 +55,7 @@ class BusinessProfileScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             Text(
-              'Especialistas en reparación de computadoras y laptops.',
+              description,
               textAlign: TextAlign.center,
 
               style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
@@ -46,22 +63,18 @@ class BusinessProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            _buildInfoTile(
-              icon: Icons.phone,
-              title: 'Teléfono',
-              value: '+52 786 123 4567',
-            ),
+            _buildInfoTile(icon: Icons.phone, title: 'Teléfono', value: phone),
 
             _buildInfoTile(
               icon: Icons.location_on,
               title: 'Dirección',
-              value: 'Ciudad Hidalgo, Michoacán',
+              value: address,
             ),
 
             _buildInfoTile(
               icon: Icons.access_time,
               title: 'Horario',
-              value: '8:00 AM - 8:00 PM',
+              value: schedule,
             ),
 
             const SizedBox(height: 30),
@@ -96,8 +109,140 @@ class BusinessProfileScreen extends StatelessWidget {
 
               child: ElevatedButton(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Editar perfil próximamente')),
+                  final businessController = TextEditingController(
+                    text: businessName,
+                  );
+
+                  final descriptionController = TextEditingController(
+                    text: description,
+                  );
+
+                  final phoneController = TextEditingController(text: phone);
+
+                  final addressController = TextEditingController(
+                    text: address,
+                  );
+
+                  final scheduleController = TextEditingController(
+                    text: schedule,
+                  );
+
+                  showDialog(
+                    context: context,
+
+                    builder: (context) {
+                      return AlertDialog(
+                        backgroundColor: AppColors.cardBackground,
+
+                        title: const Text(
+                          'Editar perfil',
+
+                          style: TextStyle(color: Colors.white),
+                        ),
+
+                        content: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+
+                            children: [
+                              TextField(
+                                controller: businessController,
+
+                                style: const TextStyle(color: Colors.white),
+
+                                decoration: const InputDecoration(
+                                  hintText: 'Nombre del negocio',
+                                ),
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              TextField(
+                                controller: descriptionController,
+
+                                style: const TextStyle(color: Colors.white),
+
+                                decoration: const InputDecoration(
+                                  hintText: 'Descripción',
+                                ),
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              TextField(
+                                controller: phoneController,
+
+                                style: const TextStyle(color: Colors.white),
+
+                                decoration: const InputDecoration(
+                                  hintText: 'Teléfono',
+                                ),
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              TextField(
+                                controller: addressController,
+
+                                style: const TextStyle(color: Colors.white),
+
+                                decoration: const InputDecoration(
+                                  hintText: 'Dirección',
+                                ),
+                              ),
+
+                              const SizedBox(height: 12),
+
+                              TextField(
+                                controller: scheduleController,
+
+                                style: const TextStyle(color: Colors.white),
+
+                                decoration: const InputDecoration(
+                                  hintText: 'Horario',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+
+                            child: const Text('Cancelar'),
+                          ),
+
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                businessName = businessController.text;
+
+                                description = descriptionController.text;
+
+                                phone = phoneController.text;
+
+                                address = addressController.text;
+
+                                schedule = scheduleController.text;
+                              });
+
+                              Navigator.pop(context);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Perfil actualizado'),
+                                ),
+                              );
+                            },
+
+                            child: const Text('Guardar'),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
 

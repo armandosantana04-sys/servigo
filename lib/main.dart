@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'screens/splash/splash_screen.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
 
@@ -19,9 +19,12 @@ class ServiGoApp extends StatelessWidget {
 
       theme: AppTheme.darkTheme,
 
-      initialRoute: AppRoutes.login,
+      initialRoute: '/splash',
+      routes: {
+        ...AppRoutes.routes,
 
-      routes: AppRoutes.routes,
+        '/splash': (context) => const SplashScreen(),
+      },
     );
   }
 }

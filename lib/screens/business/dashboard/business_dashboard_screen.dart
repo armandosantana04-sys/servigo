@@ -10,7 +10,10 @@ class BusinessDashboardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      appBar: AppBar(title: const Text('Panel de negocio')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Panel de negocio'),
+      ),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),

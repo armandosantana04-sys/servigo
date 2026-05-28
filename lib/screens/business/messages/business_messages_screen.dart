@@ -10,7 +10,10 @@ class BusinessMessagesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      appBar: AppBar(title: const Text('Mensajes')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Mensajes'),
+      ),
 
       body: ListView(
         padding: const EdgeInsets.all(20),
