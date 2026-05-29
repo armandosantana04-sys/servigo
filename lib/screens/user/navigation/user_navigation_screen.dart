@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
 import '../home/home_screen.dart';
 import '../services/services_screen.dart';
 import '../favorites/favorites_screen.dart';
 import '../profile/profile_screen.dart';
-import '../../shared/chat/chat_screen.dart';
+import '../chats/chats_screen.dart';
 
 class UserNavigationScreen extends StatefulWidget {
   const UserNavigationScreen({super.key});
@@ -20,7 +19,7 @@ class _UserNavigationScreenState extends State<UserNavigationScreen> {
     const HomeScreen(),
     const ServicesScreen(),
     const FavoritesScreen(),
-    ChatScreen(chatName: 'TechFix', isBusiness: false),
+    const ChatsScreen(),
     const UserProfileScreen(),
   ];
 

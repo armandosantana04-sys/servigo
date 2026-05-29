@@ -34,7 +34,7 @@ class UserProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             const Text(
-              'Armando López',
+              'Armando Santana',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -55,12 +55,6 @@ class UserProfileScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const HistoryScreen()),
-              );
-            }),
-            _option(context, Icons.favorite, 'Favoritos', () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const FavoritesScreen()),
               );
             }),
             _option(context, Icons.settings, 'Configuración', () {

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_colors.dart';
-
+import '../../screens/business/messages/business_messages_screen.dart';
 import '../user/home/home_screen.dart';
 import '../services/services_catalog_screen.dart';
-import '../messages/messages_screen.dart';
 import '../profile/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -20,7 +19,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final List<Widget> screens = [
     const HomeScreen(),
     const ServicesCatalogScreen(),
-    const MessagesScreen(),
+    const BusinessMessagesScreen(),
     const UserProfileScreen(),
   ];
 

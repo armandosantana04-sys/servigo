@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
 
@@ -51,58 +51,70 @@ class _SplashScreenState extends State<SplashScreen>
       backgroundColor: AppColors.background,
 
       body: Center(
-        child: FadeTransition(
-          opacity: _fadeAnimation,
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 0.8, end: 1.0).animate(
+            CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+          ),
 
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: FadeTransition(
+            opacity: _fadeAnimation,
 
-            children: [
-              Container(
-                width: 130,
-                height: 130,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
 
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withOpacity(0.45),
+                        blurRadius: 50,
+                        spreadRadius: 10,
+                      ),
+                    ],
+                  ),
 
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withOpacity(0.45),
-                      blurRadius: 25,
-                      spreadRadius: 5,
-                    ),
-                  ],
+                  child: Image.asset(
+                    'assets/images/logo_servigo.png',
+                    width: 180,
+                    height: 180,
+                  ),
                 ),
 
-                child: const Icon(
-                  Icons.home_repair_service,
-                  color: Colors.white,
-                  size: 60,
+                const SizedBox(height: 25),
+
+                Text(
+                  'ServiGo',
+
+                  style: TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 42,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 30),
+                const SizedBox(height: 10),
 
-              Text(
-                'ServiGo',
-
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
+                Text(
+                  'Servicios que te acercan',
+                  style: TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 12),
+                const SizedBox(height: 4),
 
-              Text(
-                'Conectando servicios...',
-
-                style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
-              ),
-            ],
+                Text(
+                  'a soluciones reales',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

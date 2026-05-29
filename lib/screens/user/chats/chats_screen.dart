@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../shared/chat/chat_screen.dart';
 import '../../../core/constants/app_colors.dart';
 
 class ChatsScreen extends StatelessWidget {
@@ -17,11 +17,13 @@ class ChatsScreen extends StatelessWidget {
 
         children: [
           _chatTile(
+            context: context,
             name: 'Martínez Plomería',
             message: 'Claro, podemos ir hoy.',
           ),
 
           _chatTile(
+            context: context,
             name: 'TechFix',
             message: 'Tu computadora estará lista mañana.',
           ),
@@ -30,14 +32,20 @@ class ChatsScreen extends StatelessWidget {
     );
   }
 
-  Widget _chatTile({required String name, required String message}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(20),
-      ),
+  Widget _chatTile({
+    required BuildContext context,
+    required String name,
+    required String message,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ChatScreen(chatName: name, isBusiness: false),
+          ),
+        );
+      },
 
       child: ListTile(
         leading: CircleAvatar(
