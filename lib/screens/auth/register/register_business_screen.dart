@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:servigo/screens/business/navigation/business_navigation_screen.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/inputs/custom_text_field.dart';
@@ -32,6 +33,55 @@ class _RegisterBusinessScreenState extends State<RegisterBusinessScreen> {
 
   final scheduleController = TextEditingController();
   final servicesController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> registerBusiness() async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      await _firestore.collection('businesses').doc(credential.user!.uid).set({
+        'uid': credential.user!.uid,
+        'businessName': businessNameController.text.trim(),
+        'category': categoryController.text.trim(),
+        'description': descriptionController.text.trim(),
+        'email': emailController.text.trim(),
+        'phone': phoneController.text.trim(),
+        'address': addressController.text.trim(),
+        'colony': colonyController.text.trim(),
+        'schedule': scheduleController.text.trim(),
+        'services': servicesController.text.trim(),
+        'role': 'business',
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      if (!mounted) return;
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => const BusinessNavigationScreen()),
+        (route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      String mensaje = 'Error al registrar empresa';
+
+      if (e.code == 'email-already-in-use') {
+        mensaje = 'Ese correo ya está registrado';
+      }
+
+      if (e.code == 'weak-password') {
+        mensaje = 'La contraseña es demasiado débil';
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(mensaje)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -266,15 +316,7 @@ class _RegisterBusinessScreenState extends State<RegisterBusinessScreen> {
 
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-
-                      MaterialPageRoute(
-                        builder: (_) => const BusinessNavigationScreen(),
-                      ),
-
-                      (route) => false,
-                    );
+                    registerBusiness();
                   }
                 },
               ),

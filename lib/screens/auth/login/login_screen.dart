@@ -10,6 +10,7 @@ import '../../main_navigation/main_navigation_screen.dart';
 import '../../user/navigation/user_navigation_screen.dart';
 import '../../business/navigation/business_navigation_screen.dart';
 import '../privacy_policy_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,9 +21,42 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  Future<void> signIn() async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const UserNavigationScreen()),
+      );
+    } on FirebaseAuthException catch (e) {
+      String mensaje = 'Error al iniciar sesión';
+
+      if (e.code == 'user-not-found') {
+        mensaje = 'No existe una cuenta con ese correo';
+      }
+
+      if (e.code == 'wrong-password') {
+        mensaje = 'Contraseña incorrecta';
+      }
+
+      if (e.code == 'invalid-email') {
+        mensaje = 'Correo inválido';
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(mensaje)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -344,13 +378,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             text: 'Iniciar sesión',
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        const UserNavigationScreen(),
-                                  ),
-                                );
+                                signIn();
                               }
                             },
                           ),

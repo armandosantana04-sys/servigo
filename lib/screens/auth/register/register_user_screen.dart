@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:servigo/screens/user/navigation/user_navigation_screen.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../widgets/inputs/custom_text_field.dart';
 import '../../../widgets/buttons/primary_button.dart';
@@ -28,6 +29,52 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
 
   final addressController = TextEditingController();
   final colonyController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> registerUser() async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      await _firestore.collection('users').doc(credential.user!.uid).set({
+        'uid': credential.user!.uid,
+        'name': nameController.text.trim(),
+        'lastName': lastNameController.text.trim(),
+        'email': emailController.text.trim(),
+        'phone': phoneController.text.trim(),
+        'address': addressController.text.trim(),
+        'colony': colonyController.text.trim(),
+        'role': 'user',
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      if (!mounted) return;
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => const UserNavigationScreen()),
+        (route) => false,
+      );
+    } on FirebaseAuthException catch (e) {
+      String mensaje = 'Error al registrarse';
+
+      if (e.code == 'email-already-in-use') {
+        mensaje = 'Ese correo ya está registrado';
+      }
+
+      if (e.code == 'weak-password') {
+        mensaje = 'La contraseña es demasiado débil';
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(mensaje)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -214,15 +261,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
 
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-
-                      MaterialPageRoute(
-                        builder: (_) => const UserNavigationScreen(),
-                      ),
-
-                      (route) => false,
-                    );
+                    registerUser();
                   }
                 },
               ),
